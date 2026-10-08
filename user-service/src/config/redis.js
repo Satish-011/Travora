@@ -1,3 +1,15 @@
+/**
+ * Redis Client Configuration & Singleton Instance
+ * 
+ * Manages connections, automatic retries, and events for Redis.
+ * Key Patterns Used:
+ * - refresh:<userId>:<deviceId> -> JTI (TTL: config.REFRESH_TOKEN_EXP_SEC)
+ * - user:<userId> -> JSON Cached User Profile (TTL: config.REDIS_USER_TTL)
+ * - otp:rate:<email> -> Rate limit counter (TTL: 3600s)
+ * - otp:session:<sessionId> -> JSON { hashedOtp, meta } (TTL: config.OTP_TTL)
+ * - otp:attempts:<email> -> Verification attempts counter (TTL: config.OTP_TTL)
+ */
+
 const Redis = require('ioredis');
 const {config} = require('.');
 const logger = require('./logger');
